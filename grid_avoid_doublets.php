@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Plugin Name: Grid Avoid Doubletts
+ * Plugin Name: Grid Avoid Doublets
  * Plugin URI: https://github.com/palasthotel/grid-avoid-doubletts-wordpress
- * Description: Avoid doubles API while rendering grids
+ * Description: Avoid doublets API while rendering grids
  * Version: 1.0
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
@@ -12,7 +12,7 @@
  * @package Palasthotel\Grid-WordPress-Box-Social
  */
 
-class GridAvoidDoubletts{
+class GridAvoidDoublets{
 	
 	/**
 	 * array key for not grid specific post ids
@@ -35,7 +35,7 @@ class GridAvoidDoubletts{
 	}
 	
 	/**
-	 * add an placed constents for example and post id in a grid id
+	 * add an placed contents for example and post id in a grid id
 	 *
 	 * @param integer $content_id unique for area
 	 * @param null|integer|string $area_id id for area
@@ -95,23 +95,23 @@ class GridAvoidDoubletts{
 /**
  * initialize
  */
-global $grid_avoid_doubletts;
-$grid_avoid_doubletts = new GridAvoidDoubletts();
+global $grid_avoid_doublets;
+$grid_avoid_doublets = new GridAvoidDoublets();
 
 /**
  * @param integer $post_id
  * @param string | integer $grid_id
  */
-function grid_avoid_doubletts_add($post_id, $grid_id = "global"){
-	global $grid_avoid_doubletts;
-	$grid_avoid_doubletts->addContentId($post_id, $grid_id);
+function grid_avoid_doublets_add($post_id, $grid_id = "global"){
+	global $grid_avoid_doublets;
+	$grid_avoid_doublets->addContentId($post_id, $grid_id);
 }
 
 /**
  * @param integer $post_id
  * @param null | string | integer  $grid_id
  */
-function grid_avoid_doubletts_is_placed($post_id, $grid_id = null){
-	global $grid_avoid_doubletts;
-	$grid_avoid_doubletts->isPlaced($post_id, $grid_id);
+function grid_avoid_doublets_is_placed($post_id, $grid_id = null){
+	global $grid_avoid_doublets;
+	$grid_avoid_doublets->isPlaced($post_id, $grid_id);
 }
