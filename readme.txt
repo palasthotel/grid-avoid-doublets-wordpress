@@ -1,4 +1,4 @@
-=== Grid Avoid Doubletts ===
+=== Grid Avoid Doublets ===
 Contributors: edwardbock,mkernel
 Donate link: http://palasthotel.de/
 Tags: grid, landingpage, editor, admin, page, containerist, extension
@@ -18,7 +18,7 @@ Avoid doubles API while rendering grids
 == Installation ==
 
 1. Upload Plugin zip file to the `/wp-content/plugins/` directory
-1. Extract the Plugin to a `grid-avoid-doubletts` Folder
+1. Extract the Plugin to a `grid-avoid-doublets` Folder
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Use the API Calls in your theme and grid boxes
 
