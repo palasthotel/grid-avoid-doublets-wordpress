@@ -25,14 +25,47 @@ class GridAvoidDoublets{
 	private $areas;
 	
 	/**
-	 * GridAvoidDoubletts constructor.
+	 * GridAvoidDoublets constructor.
 	 */
 	public function __construct() {
-		$this->areas = array();
-		
-		// TODO: on action start render clear
-		
+		$this->clear();
+		add_action("plugins_loaded",array($this, "init"));
 	}
+	
+	/**
+	 * init plugin after plugins are loaded
+	 */
+	public function init(){
+		if(class_exists("\\Grid\\Constants\\Hook")){
+			add_action("grid_".\Grid\Constants\Hook::GRID_RENDER_BEFORE, array($this, "grid_render_before"));
+		}
+	}
+	
+	/**
+	 * fired before a grid renders
+	 * @param $args array
+	 */
+	public function grid_render_before($args){
+		$grid_id = $args["grid"];
+		$editmode = $args["editmode"];
+		if(!$editmode){
+			$this->clear($grid_id);
+		}
+	}
+	
+	/**
+	 * clears the blacklist
+	 * @param null|string|integer $grid_id
+	 */
+	public function clear($grid_id = null){
+		if( $grid_id == null ){
+			$this->areas = array();
+			return;
+		}
+		$this->areas[$grid_id] = array();
+	}
+	
+	
 	
 	/**
 	 * add an placed contents for example and post id in a grid id
@@ -64,24 +97,24 @@ class GridAvoidDoublets{
 	
 	/**
 	 * check if post is already placed
-	 * @param integer $post_id
+	 * @param integer $content_id
 	 * @param self::GLOBAL_KEY|integer|null $grid_id
 	 *
 	 * @return bool
 	 */
-	public function isPlaced($post_id, $grid_id = null){
-		if($grid_id != null){
+	public function isPlaced( $content_id, $area_id = null){
+		if( $area_id != null){
 			/**
 			 * have a look in the specific grid
 			 */
-			return ( isset($this->areas[$grid_id]) && in_array($post_id, $this->areas[$grid_id]));
+			return ( isset($this->areas[$area_id]) && in_array( $content_id, $this->areas[$area_id]));
 		}
 		
 		/**
 		 * have a look on all placed posts in all grids
 		 */
-		foreach ($this->areas as $_grid_id => $_post_id){
-			if($_post_id == $post_id) return true;
+		foreach ($this->areas as $_area_id => $_content_id){
+			if( $_content_id == $content_id) return true;
 		}
 		
 		/**
@@ -89,7 +122,6 @@ class GridAvoidDoublets{
 		 */
 		return false;
 	}
-	
 }
 
 /**
@@ -99,19 +131,19 @@ global $grid_avoid_doublets;
 $grid_avoid_doublets = new GridAvoidDoublets();
 
 /**
- * @param integer $post_id
- * @param string | integer $grid_id
+ * @param integer $content_id
+ * @param string | integer $area_id
  */
-function grid_avoid_doublets_add($post_id, $grid_id = "global"){
+function grid_avoid_doublets_add($content_id, $area_id = "global"){
 	global $grid_avoid_doublets;
-	$grid_avoid_doublets->addContentId($post_id, $grid_id);
+	$grid_avoid_doublets->addContentId($content_id, $area_id);
 }
 
 /**
- * @param integer $post_id
- * @param null | string | integer  $grid_id
+ * @param integer $content_id
+ * @param null | string | integer  $area_id
  */
-function grid_avoid_doublets_is_placed($post_id, $grid_id = null){
+function grid_avoid_doublets_is_placed($content_id, $area_id = null){
 	global $grid_avoid_doublets;
-	$grid_avoid_doublets->isPlaced($post_id, $grid_id);
+	$grid_avoid_doublets->isPlaced($content_id, $area_id);
 }
