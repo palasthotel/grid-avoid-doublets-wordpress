@@ -36,8 +36,8 @@ class GridAvoidDoublets{
 	 * init plugin after plugins are loaded
 	 */
 	public function init(){
-		if(class_exists("\\Grid\\Constants\\Hook")){
-			add_action("grid_".\Grid\Constants\Hook::GRID_RENDER_BEFORE, array($this, "grid_render_before"));
+		if(defined("\\Grid\\Constants\\Hook::WILL_RENDER_GRID")){
+			add_action("grid_".\Grid\Constants\Hook::WILL_RENDER_GRID, array($this, "grid_render_before"));
 		}
 	}
 	
