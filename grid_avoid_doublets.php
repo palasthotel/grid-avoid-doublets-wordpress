@@ -74,7 +74,7 @@ class GridAvoidDoublets{
 	 * @param null|integer|string $area_id id for area
 	 *
 	 */
-	public function addContentId( $content_id, $area_id = null){
+	public function add_content_id( $content_id, $area_id = null){
 		/**
 		 * if no grid id set to global index
 		 */
@@ -102,7 +102,7 @@ class GridAvoidDoublets{
 	 *
 	 * @return bool
 	 */
-	public function isPlaced( $content_id, $area_id = null){
+	public function is_placed( $content_id, $area_id = null){
 		if( $area_id != null){
 			/**
 			 * have a look in the specific grid
@@ -122,6 +122,20 @@ class GridAvoidDoublets{
 		 */
 		return false;
 	}
+	
+	/**
+	 * @param null|string|integer $area_id
+	 *
+	 * @return array
+	 */
+	public function get_placed_ids($area_id = null){
+		if($area_id != null) return (isset($this->areas[$area_id]))? $this->areas[$area_id]: array();
+		$all = array();
+		foreach ($this->areas as $area_id => $content_ids){
+			$all = array_merge($all, $content_ids);
+		}
+		return $all;
+	}
 }
 
 /**
@@ -136,7 +150,7 @@ $grid_avoid_doublets = new GridAvoidDoublets();
  */
 function grid_avoid_doublets_add($content_id, $area_id = "global"){
 	global $grid_avoid_doublets;
-	$grid_avoid_doublets->addContentId($content_id, $area_id);
+	$grid_avoid_doublets->add_content_id($content_id, $area_id);
 }
 
 /**
@@ -145,5 +159,14 @@ function grid_avoid_doublets_add($content_id, $area_id = "global"){
  */
 function grid_avoid_doublets_is_placed($content_id, $area_id = null){
 	global $grid_avoid_doublets;
-	$grid_avoid_doublets->isPlaced($content_id, $area_id);
+	$grid_avoid_doublets->is_placed($content_id, $area_id);
+}
+
+/**
+ * return array of post ids that are already placed
+ * @return array
+ */
+function grid_avoid_doublets_get_placed($area_id = null){
+	global $grid_avoid_doublets;
+	return $grid_avoid_doublets->get_placed_ids($area_id);
 }
