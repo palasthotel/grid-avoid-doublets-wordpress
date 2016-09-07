@@ -8,11 +8,11 @@ Stable tag: 1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
-Avoid doubles API while rendering grids
+Avoid doublets API while rendering grids
 
 == Description ==
 
-Avoid doubles API while rendering grids
+Avoid doublets API while rendering grids
 
 
 == Installation ==
