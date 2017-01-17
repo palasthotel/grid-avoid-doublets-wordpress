@@ -148,7 +148,7 @@ $grid_avoid_doublets = new GridAvoidDoublets();
  * @param integer $content_id
  * @param string | integer $area_id
  */
-function grid_avoid_doublets_add($content_id, $area_id = "global"){
+function grid_avoid_doublets_add($content_id, $area_id = null){
 	global $grid_avoid_doublets;
 	$grid_avoid_doublets->add_content_id($content_id, $area_id);
 }
