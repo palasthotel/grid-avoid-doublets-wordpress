@@ -147,3 +147,30 @@ global $grid_avoid_doublets;
 $grid_avoid_doublets = new Plugin();
 
 require_once "public-functions.php";
+
+/**
+ * @param integer $content_id
+ * @param string | integer $area_id
+ */
+function grid_avoid_doublets_add($content_id, $area_id = null){
+	global $grid_avoid_doublets;
+	$grid_avoid_doublets->add_content_id($content_id, $area_id);
+}
+
+/**
+ * @param integer $content_id
+ * @param null | string | integer  $area_id
+ */
+function grid_avoid_doublets_is_placed($content_id, $area_id = null){
+	global $grid_avoid_doublets;
+	$grid_avoid_doublets->is_placed($content_id, $area_id);
+}
+
+/**
+ * return array of post ids that are already placed
+ * @return array
+ */
+function grid_avoid_doublets_get_placed($area_id = null){
+	global $grid_avoid_doublets;
+	return $grid_avoid_doublets->get_placed_ids($area_id);
+}
