@@ -48,6 +48,11 @@ class Plugin{
 	 * @param $args object
 	 */
 	public function grid_render_before($args){
+		/**
+		 * if $args not valid, grid is not updated yet i guess
+		 */
+		if(!is_object($args) || !is_object($args->grid)) return;
+		
 		$grid_id = $args->grid->gridid;
 		$editmode = $args->editmode;
 		if(!$editmode){
