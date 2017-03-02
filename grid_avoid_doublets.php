@@ -4,7 +4,7 @@
  * Plugin Name: Grid Avoid Doublets
  * Plugin URI: https://github.com/palasthotel/grid-avoid-doublets-wordpress
  * Description: Avoid doublets API while rendering grids
- * Version: 1.1
+ * Version: 1.1.1
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * License: http://www.gnu.org/licenses/gpl GPLv3
@@ -48,13 +48,22 @@ class Plugin{
 	 * @param $args object
 	 */
 	public function grid_render_before($args){
-		/**
-		 * if $args not valid, grid is not updated yet i guess
-		 */
-		if(!is_object($args) || !is_object($args->grid)) return;
+		$grid_id = null;
+		$editmode = true;
+		if(is_object($args)){
+			/**
+			 * grid 1.6.12 way
+			 */
+			$grid_id = $args->grid->gridid;
+			$editmode = $args->editmode;
+		} else if(is_array($args)){
+			/**
+			 * @deprecated grid 1.6.11 way
+			 */
+			$grid_id = $args["grid"];
+			$editmode = $args["editmode"];
+		}
 		
-		$grid_id = $args->grid->gridid;
-		$editmode = $args->editmode;
 		if(!$editmode){
 			$this->clear($grid_id);
 		}

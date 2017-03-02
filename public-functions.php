@@ -19,9 +19,10 @@ function grid_avoid_doublets_add($content_id, $area_id = "global"){
 /**
  * @param integer $content_id
  * @param null | string | integer  $area_id
+ * @return boolean
  */
 function grid_avoid_doublets_is_placed($content_id, $area_id = null){
-	grid_avoid_doublets_get_plugin()->is_placed($content_id, $area_id);
+	return grid_avoid_doublets_get_plugin()->is_placed($content_id, $area_id);
 }
 
 /**
@@ -29,5 +30,5 @@ function grid_avoid_doublets_is_placed($content_id, $area_id = null){
  * @return array
  */
 function grid_avoid_doublets_get_placed($area_id = null){
-	grid_avoid_doublets_get_plugin()->get_placed_ids($area_id);
+	return grid_avoid_doublets_get_plugin()->get_placed_ids($area_id);
 }
