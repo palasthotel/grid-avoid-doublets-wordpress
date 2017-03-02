@@ -4,7 +4,7 @@
  * Plugin Name: Grid Avoid Doublets
  * Plugin URI: https://github.com/palasthotel/grid-avoid-doublets-wordpress
  * Description: Avoid doublets API while rendering grids
- * Version: 1.0
+ * Version: 1.1
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * License: http://www.gnu.org/licenses/gpl GPLv3
@@ -12,7 +12,9 @@
  * @package Palasthotel\Grid-WordPress-Box-Social
  */
 
-class GridAvoidDoublets{
+namespace GridAvoidDoublets;
+
+class Plugin{
 	
 	/**
 	 * array key for not grid specific post ids
@@ -36,18 +38,18 @@ class GridAvoidDoublets{
 	 * init plugin after plugins are loaded
 	 */
 	public function init(){
-		if(defined("\\Grid\\Constants\\Hook::WILL_RENDER_GRID")){
+		if(defined('\Grid\Constants\Hook::WILL_RENDER_GRID')){
 			add_action("grid_".\Grid\Constants\Hook::WILL_RENDER_GRID, array($this, "grid_render_before"));
 		}
 	}
 	
 	/**
 	 * fired before a grid renders
-	 * @param $args array
+	 * @param $args object
 	 */
 	public function grid_render_before($args){
-		$grid_id = $args["grid"];
-		$editmode = $args["editmode"];
+		$grid_id = $args->grid->gridid;
+		$editmode = $args->editmode;
 		if(!$editmode){
 			$this->clear($grid_id);
 		}
@@ -142,31 +144,6 @@ class GridAvoidDoublets{
  * initialize
  */
 global $grid_avoid_doublets;
-$grid_avoid_doublets = new GridAvoidDoublets();
+$grid_avoid_doublets = new Plugin();
 
-/**
- * @param integer $content_id
- * @param string | integer $area_id
- */
-function grid_avoid_doublets_add($content_id, $area_id = "global"){
-	global $grid_avoid_doublets;
-	$grid_avoid_doublets->add_content_id($content_id, $area_id);
-}
-
-/**
- * @param integer $content_id
- * @param null | string | integer  $area_id
- */
-function grid_avoid_doublets_is_placed($content_id, $area_id = null){
-	global $grid_avoid_doublets;
-	$grid_avoid_doublets->is_placed($content_id, $area_id);
-}
-
-/**
- * return array of post ids that are already placed
- * @return array
- */
-function grid_avoid_doublets_get_placed($area_id = null){
-	global $grid_avoid_doublets;
-	return $grid_avoid_doublets->get_placed_ids($area_id);
-}
+require_once "public-functions.php";

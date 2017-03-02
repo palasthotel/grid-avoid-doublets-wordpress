@@ -3,8 +3,8 @@ Contributors: edwardbock,mkernel
 Donate link: http://palasthotel.de/
 Tags: grid, landingpage, editor, admin, page, containerist, extension
 Requires at least: 4.0
-Tested up to: 4.6
-Stable tag: 1.0
+Tested up to: 4.7.2
+Stable tag: 1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -29,6 +29,9 @@ Avoid doublets API while rendering grids
 
 
 == Changelog ==
+
+= 1.1 =
+ * Compatible to Grid Update 1.6.12
 
 = 1.0 =
 * first release
