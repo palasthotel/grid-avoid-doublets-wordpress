@@ -1,9 +1,9 @@
 === Grid Avoid Doublets ===
-Contributors: edwardbock,mkernel
+Contributors: palasthotel, edwardbock, mkernel
 Donate link: http://palasthotel.de/
 Tags: grid, landingpage, editor, admin, page, containerist, extension
 Requires at least: 4.0
-Tested up to: 4.7.2
+Tested up to: 4.7.3
 Stable tag: 1.1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
