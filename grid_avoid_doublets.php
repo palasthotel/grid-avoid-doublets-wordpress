@@ -4,7 +4,7 @@
  * Plugin Name: Grid Avoid Doublets
  * Plugin URI: https://github.com/palasthotel/grid-avoid-doublets-wordpress
  * Description: Avoid doublets API while rendering grids
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * License: http://www.gnu.org/licenses/gpl GPLv3
@@ -14,75 +14,90 @@
 
 namespace GridAvoidDoublets;
 
-class Plugin{
-	
+class Plugin {
+
 	/**
 	 * array key for not grid specific post ids
 	 */
 	const GLOBAL_KEY = "__global__";
-	
+
 	/**
 	 * @var array
 	 */
 	private $areas;
-	
+
 	/**
 	 * GridAvoidDoublets constructor.
 	 */
 	public function __construct() {
 		$this->clear();
-		add_action("plugins_loaded",array($this, "init"));
+		add_action( "plugins_loaded", array( $this, "init" ) );
+		add_filter( 'grid_posts_box_query_args', array( $this, "filter_query_args" ) );
 	}
-	
+
 	/**
 	 * init plugin after plugins are loaded
 	 */
-	public function init(){
-		if(defined('\Grid\Constants\Hook::WILL_RENDER_GRID')){
-			add_action("grid_".\Grid\Constants\Hook::WILL_RENDER_GRID, array($this, "grid_render_before"));
+	public function init() {
+		if ( defined( '\Grid\Constants\Hook::WILL_RENDER_GRID' ) ) {
+			add_action( "grid_" . \Grid\Constants\Hook::WILL_RENDER_GRID, array( $this, "grid_render_before" ) );
 		}
 	}
-	
+
+	/**
+	 * Add doublet post ids to query
+	 *
+	 * @param $args
+	 *
+	 * @return array
+	 */
+	public function filter_query_args( $args ) {
+		$args['post__not_in'] = array_merge( $args['post__not_in'], $this->get_placed_ids() );
+		return $args;
+	}
+
 	/**
 	 * fired before a grid renders
+	 *
 	 * @param $args object
 	 */
-	public function grid_render_before($args){
-		$grid_id = null;
+	public function grid_render_before( $args ) {
+		$grid_id  = null;
 		$editmode = true;
-		if(is_object($args)){
+		if ( is_object( $args ) ) {
 			/**
 			 * grid 1.6.12 way
 			 */
-			$grid_id = $args->grid->gridid;
+			$grid_id  = $args->grid->gridid;
 			$editmode = $args->editmode;
-		} else if(is_array($args)){
+		} else if ( is_array( $args ) ) {
 			/**
 			 * @deprecated grid 1.6.11 way
 			 */
-			$grid_id = $args["grid"];
+			$grid_id  = $args["grid"];
 			$editmode = $args["editmode"];
 		}
-		
-		if(!$editmode){
-			$this->clear($grid_id);
+
+		if ( ! $editmode ) {
+			$this->clear( $grid_id );
 		}
 	}
-	
+
 	/**
 	 * clears the blacklist
+	 *
 	 * @param null|string|integer $grid_id
 	 */
-	public function clear($grid_id = null){
-		if( $grid_id == null ){
+	public function clear( $grid_id = null ) {
+		if ( $grid_id == null ) {
 			$this->areas = array();
+
 			return;
 		}
-		$this->areas[$grid_id] = array();
+		$this->areas[ $grid_id ] = array();
 	}
-	
-	
-	
+
+
 	/**
 	 * add an placed contents for example and post id in a grid id
 	 *
@@ -90,66 +105,74 @@ class Plugin{
 	 * @param null|integer|string $area_id id for area
 	 *
 	 */
-	public function add_content_id( $content_id, $area_id = null){
+	public function add_content_id( $content_id, $area_id = null ) {
 		/**
 		 * if no grid id set to global index
 		 */
-		if( $area_id == null) $area_id = self::GLOBAL_KEY;
-		
+		if ( $area_id == null ) {
+			$area_id = self::GLOBAL_KEY;
+		}
+
 		/**
 		 * create new entry for grid id
 		 */
-		if(!isset($this->areas[$area_id])){
-			$this->areas[$area_id] = array();
+		if ( ! isset( $this->areas[ $area_id ] ) ) {
+			$this->areas[ $area_id ] = array();
 		}
-		
+
 		/**
 		 * add post id if not already set
 		 */
-		if(!in_array( $content_id, $this->areas[$area_id])){
-			$this->areas[$area_id][] = $content_id;
+		if ( ! in_array( $content_id, $this->areas[ $area_id ] ) ) {
+			$this->areas[ $area_id ][] = $content_id;
 		}
 	}
-	
+
 	/**
 	 * check if post is already placed
+	 *
 	 * @param integer $content_id
 	 * @param self::GLOBAL_KEY|integer|null $grid_id
 	 *
 	 * @return bool
 	 */
-	public function is_placed( $content_id, $area_id = null){
-		if( $area_id != null){
+	public function is_placed( $content_id, $area_id = null ) {
+		if ( $area_id != null ) {
 			/**
 			 * have a look in the specific grid
 			 */
-			return ( isset($this->areas[$area_id]) && in_array( $content_id, $this->areas[$area_id]));
+			return ( isset( $this->areas[ $area_id ] ) && in_array( $content_id, $this->areas[ $area_id ] ) );
 		}
-		
+
 		/**
 		 * have a look on all placed posts in all grids
 		 */
-		foreach ($this->areas as $_area_id => $_content_id){
-			if( $_content_id == $content_id) return true;
+		foreach ( $this->areas as $_area_id => $_content_id ) {
+			if ( $_content_id == $content_id ) {
+				return true;
+			}
 		}
-		
+
 		/**
 		 * if nothing found its not placed
 		 */
 		return false;
 	}
-	
+
 	/**
 	 * @param null|string|integer $area_id
 	 *
 	 * @return array
 	 */
-	public function get_placed_ids($area_id = null){
-		if($area_id != null) return (isset($this->areas[$area_id]))? $this->areas[$area_id]: array();
-		$all = array();
-		foreach ($this->areas as $area_id => $content_ids){
-			$all = array_merge($all, $content_ids);
+	public function get_placed_ids( $area_id = null ) {
+		if ( $area_id != null ) {
+			return ( isset( $this->areas[ $area_id ] ) ) ? $this->areas[ $area_id ] : array();
 		}
+		$all = array();
+		foreach ( $this->areas as $area_id => $content_ids ) {
+			$all = array_merge( $all, $content_ids );
+		}
+
 		return $all;
 	}
 }
@@ -166,25 +189,26 @@ require_once "public-functions.php";
  * @param integer $content_id
  * @param string | integer $area_id
  */
-function grid_avoid_doublets_add($content_id, $area_id = null){
+function grid_avoid_doublets_add( $content_id, $area_id = null ) {
 	global $grid_avoid_doublets;
-	$grid_avoid_doublets->add_content_id($content_id, $area_id);
+	$grid_avoid_doublets->add_content_id( $content_id, $area_id );
 }
 
 /**
  * @param integer $content_id
- * @param null | string | integer  $area_id
+ * @param null | string | integer $area_id
  */
-function grid_avoid_doublets_is_placed($content_id, $area_id = null){
+function grid_avoid_doublets_is_placed( $content_id, $area_id = null ) {
 	global $grid_avoid_doublets;
-	$grid_avoid_doublets->is_placed($content_id, $area_id);
+	$grid_avoid_doublets->is_placed( $content_id, $area_id );
 }
 
 /**
  * return array of post ids that are already placed
  * @return array
  */
-function grid_avoid_doublets_get_placed($area_id = null){
+function grid_avoid_doublets_get_placed( $area_id = null ) {
 	global $grid_avoid_doublets;
-	return $grid_avoid_doublets->get_placed_ids($area_id);
+
+	return $grid_avoid_doublets->get_placed_ids( $area_id );
 }
