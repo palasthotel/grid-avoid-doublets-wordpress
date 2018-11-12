@@ -30,11 +30,14 @@ Avoid doublets API while rendering grids
 
 == Changelog ==
 
+= 1.1.2 =
+* use grid hook for modifying posts list box query args
+
 = 1.1.1 =
- * Not avoiding doublets fix
+* Not avoiding doublets fix
 
 = 1.1 =
- * Compatible to Grid Update 1.6.12
+* Compatible to Grid Update 1.6.12
 
 = 1.0 =
 * first release
