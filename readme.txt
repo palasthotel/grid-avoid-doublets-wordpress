@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: grid, landingpage, editor, admin, page, containerist, extension
 Requires at least: 4.0
 Tested up to: 4.7.3
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
