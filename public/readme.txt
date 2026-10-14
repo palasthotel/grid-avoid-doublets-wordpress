@@ -24,6 +24,8 @@ Themes and custom grid boxes can use the same API to register and check their ow
 
 == Installation ==
 
+Requires the [Grid](https://wordpress.org/plugins/grid/) plugin. Since WordPress 6.5 this plugin can only be activated while Grid is active.
+
 1. Upload Plugin zip file to the `/wp-content/plugins/` directory
 1. Extract the Plugin to a `grid-avoid-doublets` Folder
 1. Activate the plugin through the 'Plugins' menu in WordPress
