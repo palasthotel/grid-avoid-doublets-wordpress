@@ -3,7 +3,7 @@ Contributors: palasthotel, janaeggebrecht, edwardbock, mkernel
 Donate link: http://palasthotel.de/
 Tags: grid, landingpage, editor, page, extension
 Requires at least: 4.0
-Requires PHP: 7.0
+Requires PHP: 8.0
 Tested up to: 7.1
 Stable tag: 1.1.2
 License: GPL-3.0-or-later
