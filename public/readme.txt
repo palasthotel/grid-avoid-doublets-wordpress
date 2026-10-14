@@ -1,7 +1,7 @@
 === Grid Avoid Doublets ===
 Contributors: palasthotel, janaeggebrecht, edwardbock, mkernel
 Donate link: http://palasthotel.de/
-Tags: grid, landingpage, editor, admin, page, containerist, extension
+Tags: grid, landingpage, editor, page, extension
 Requires at least: 4.0
 Requires PHP: 7.0
 Tested up to: 7.1
@@ -9,11 +9,17 @@ Stable tag: 1.1.2
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Avoid doublets API while rendering grids
+Prevents the same post from showing up twice when several Grid boxes list posts on one page.
 
 == Description ==
 
-Avoid doublets API while rendering grids
+Pages built with the Grid plugin often contain several boxes that list recent posts. Without coordination, the same post can appear in more than one of these boxes. This plugin keeps track of the posts that have already been placed while a grid renders and removes them from the queries of the post list boxes that follow.
+
+Themes and custom grid boxes can use the same API to register and check their own posts:
+
+* `grid_avoid_doublets_add( $post_id, $area_id )` marks a post as placed.
+* `grid_avoid_doublets_is_placed( $post_id, $area_id )` checks whether a post has already been placed.
+* `grid_avoid_doublets_get_placed( $area_id )` returns the IDs of all placed posts.
 
 
 == Installation ==
