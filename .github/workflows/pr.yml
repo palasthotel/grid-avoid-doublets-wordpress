@@ -12,8 +12,5 @@ jobs:
   checks:
     uses: palasthotel/github-workflows/.github/workflows/wp-plugin-pr.yml@v1
     with:
-      # Plugin Check reports errors on this plugin - see https://github.com/palasthotel/wp-grid-avoid-doublets/issues/5.
-      # Remove this line once they are fixed.
-      plugin-check: false
       slug: grid-avoid-doublets
       dev-plugin-name: Grid Avoid Doublets - DEV
