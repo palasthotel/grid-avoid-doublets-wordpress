@@ -5,7 +5,7 @@ Tags: grid, landingpage, editor, page, extension
 Requires at least: 4.0
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 1.1.2
+Stable tag: 2.0.0
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -38,6 +38,18 @@ Requires the [Grid](https://wordpress.org/plugins/grid/) plugin. Since WordPress
 
 
 == Changelog ==
+
+= 2.0.0 =
+**⚠ BREAKING CHANGES**
+* requires PHP 8.0 or newer
+
+**Features**
+* declare Grid as a required plugin (bebc147)
+* declare Grid as a required plugin (baaf624)
+* drop support for PHP 7 (9719883)
+
+**Bug Fixes**
+* prevent plugin file from being called directly (f2b4a90)
 
 = 1.1.2 =
 * use grid hook for modifying posts list box query args

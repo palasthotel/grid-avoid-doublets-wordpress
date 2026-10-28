@@ -1,6 +1,6 @@
 {
 	"name": "@palasthotel/grid-avoid-doublets",
-	"version": "1.1.2",
+	"version": "2.0.0",
 	"private": true,
 	"description": "Avoid doublets API while rendering grids.",
 	"license": "GPL-3.0-or-later",

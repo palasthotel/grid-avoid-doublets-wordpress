@@ -4,7 +4,7 @@
  * Plugin Name: Grid Avoid Doublets
  * Plugin URI: https://github.com/palasthotel/wp-grid-avoid-doublets
  * Description: Avoid doublets API while rendering grids
- * Version: 1.1.2
+ * Version: 2.0.0
  * Author: Palasthotel <webmaster@palasthotel.de>
  * Author URI: https://palasthotel.de
  * Requires at least: 4.0
